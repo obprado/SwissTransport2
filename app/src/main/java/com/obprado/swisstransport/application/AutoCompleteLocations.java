@@ -7,10 +7,10 @@ import java.util.Collection;
  */
 public class AutoCompleteLocations implements LocationsReactor{
 
-    private Display<Collection<String>> locationsDisplay;
+    private LocationsDisplay locationsDisplay;
     private LocationsFinder finder;
 
-    public AutoCompleteLocations(Display<Collection<String>> locationsDisplay, LocationsFinder finder) {
+    public AutoCompleteLocations(LocationsDisplay locationsDisplay, LocationsFinder finder) {
         this.locationsDisplay = locationsDisplay;
         this.finder = finder;
     }
@@ -21,6 +21,6 @@ public class AutoCompleteLocations implements LocationsReactor{
 
     @Override
     public void onLocationsFound(Collection<String> locations) {
-        locationsDisplay.display(locations);
+        locationsDisplay.updateLocations(locations);
     }
 }

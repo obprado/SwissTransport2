@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class ConnectionsRestAdapter {
 
-    public static final String CONNECTIONS_URI = "http://transport.opendata.ch/v1/stationboard?station=Aarau&limit=10";
+    public static final String CONNECTIONS_URI = "http://transport.opendata.ch/v1/stationboard?limit=10?station=";
 
     public Collection<Connection> findConnections(String location){
         String JSON = downloadJSON(location);
@@ -31,7 +31,7 @@ public class ConnectionsRestAdapter {
             ArrayList<Connection> connections = new ArrayList<Connection>();
             JSONObject jsonStationBoard = new JSONObject(json);
             JSONArray jsonConnections = jsonStationBoard.getJSONArray("stationboard");
-            for (int i = 1; i <= jsonConnections.length(); i++){
+            for (int i = 0; i < jsonConnections.length(); i++){
                 connections.add(parseConnection(jsonConnections.getJSONObject(i)));
             }
             return connections;

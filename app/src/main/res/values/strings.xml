@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">SwissTransport</string>
-    <string name="hello_world">Hello transport!</string>
     <string name="action_settings">Settings</string>
+    <string name="location">location</string>
 
 </resources>

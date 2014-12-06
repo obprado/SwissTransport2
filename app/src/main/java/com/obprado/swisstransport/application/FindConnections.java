@@ -11,7 +11,7 @@ class FindConnections implements Task, ConnectionsReactor {
 
     private ConnectionsFinder finder;
     private String origin;
-    private Display<Collection<Connection>> display;
+    private ConnectionsDisplay display;
 
     @Override
     public void execute() {
@@ -20,6 +20,6 @@ class FindConnections implements Task, ConnectionsReactor {
 
     @Override
     public void onTripsFound(Collection<Connection> connections) {
-        display.display(connections);
+        display.updateConnections(connections);
     }
 }

@@ -28,7 +28,7 @@ public class LocationsRestAdapter {
             ArrayList<String> locations = new ArrayList<String>();
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("stations");
-            for (int i=1; i <= jsonArray.length(); i++){
+            for (int i=0; i < jsonArray.length(); i++){
                 locations.add(jsonArray.getJSONObject(i).getString("name"));
             }
             return locations;

@@ -1,38 +1,45 @@
 package com.obprado.swisstransport.activities;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.obprado.swisstransport.R;
+import com.obprado.swisstransport.application.AutoCompleteLocations;
+import com.obprado.swisstransport.application.ConnectionsDisplay;
+import com.obprado.swisstransport.application.LocationsDisplay;
+import com.obprado.swisstransport.infraestructure.LocationsFinderImpl;
+import com.obprado.swisstransport.model.Connection;
+
+import java.util.Collection;
 
 
-public class transportSearch extends Activity {
+public class transportSearch extends Activity implements LocationsDisplay, ConnectionsDisplay {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transport_search);
-    }
 
+        EditText locationText = (EditText)findViewById(R.id.location);
+        LocationWatcher locationWatcher = new LocationWatcher(new AutoCompleteLocations(this, new LocationsFinderImpl()));
+        locationText.addTextChangedListener(locationWatcher);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.transport_search, menu);
-        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void updateConnections(Collection<Connection> connections) {
+        ListView listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(new ConnectionsAdapter(this, 0, connections.toArray(new Connection[connections.size()])));
+    }
+
+    @Override
+    public void updateLocations(Collection<String> locations) {
+        ListView listview = (ListView) findViewById(R.id.listview);
+        listview.setAdapter(new StringAdapter(this, 0, locations.toArray(new String[locations.size()])));
     }
 }
