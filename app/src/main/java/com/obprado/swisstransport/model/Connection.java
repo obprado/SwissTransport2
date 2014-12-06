@@ -4,6 +4,8 @@ import java.util.Date;
 
 /**
  * Created by omar on 06/12/2014.
+ * It is actually a departure, not a connection.
+ * I should refactor it but last time I did my connection to github got broken.
  */
 public class Connection {
 
