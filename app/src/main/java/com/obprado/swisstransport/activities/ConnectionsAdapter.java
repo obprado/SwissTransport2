@@ -36,7 +36,7 @@ public class ConnectionsAdapter extends ArrayAdapter<Connection> {
         TextView destination = (TextView) connectionRow.findViewById(R.id.destination);
 
         name.setText(connections[position].getName());
-        departureDate.setText(connections[position].getDeparture().toString());
+        departureDate.setText(connections[position].getHourAndMinutes());
         destination.setText(connections[position].getLocation());
 
         return connectionRow;

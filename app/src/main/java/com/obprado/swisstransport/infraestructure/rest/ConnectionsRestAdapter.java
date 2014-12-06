@@ -1,11 +1,14 @@
 package com.obprado.swisstransport.infraestructure.rest;
 
+import com.obprado.swisstransport.exceptions.ProgrammerFaultException;
 import com.obprado.swisstransport.model.Connection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -15,7 +18,7 @@ import java.util.Date;
  */
 public class ConnectionsRestAdapter {
 
-    public static final String CONNECTIONS_URI = "http://transport.opendata.ch/v1/stationboard?limit=10?station=";
+    public static final String CONNECTIONS_URI = "http://transport.opendata.ch/v1/stationboard?limit=10&station=";
 
     public Collection<Connection> findConnections(String location){
         String JSON = downloadJSON(location);
@@ -44,12 +47,16 @@ public class ConnectionsRestAdapter {
     private Connection parseConnection(JSONObject jsonConnection) {
         try {
             String name = jsonConnection.getString("name");
-            Date departureDate = new Date(jsonConnection.getJSONObject("stop").getString("departure"));
+            SimpleDateFormat dateParser = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            Date departureDate = dateParser.parse(jsonConnection.getJSONObject("stop").getString("departure"));
             String destination = jsonConnection.getString("to");
             return new Connection(name, departureDate, destination);
         } catch (JSONException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new ProgrammerFaultException(e);
         }
 
     }

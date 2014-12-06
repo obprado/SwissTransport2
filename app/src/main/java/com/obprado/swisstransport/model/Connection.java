@@ -1,5 +1,6 @@
 package com.obprado.swisstransport.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -27,5 +28,9 @@ public class Connection {
 
     public String getLocation() {
         return location;
+    }
+
+    public String getHourAndMinutes(){
+        return new SimpleDateFormat("HH:mm").format(this.departure);
     }
 }

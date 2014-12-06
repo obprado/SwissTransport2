@@ -1,6 +1,6 @@
 package com.obprado.swisstransport.infraestructure.rest;
 
-import com.obprado.swisstransport.exceptions.ProgrammerException;
+import com.obprado.swisstransport.exceptions.ProgrammerFaultException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class AdapterCommon {
             return sb.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            throw new ProgrammerException(e);
+            throw new ProgrammerFaultException(e);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
